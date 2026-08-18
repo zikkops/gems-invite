@@ -306,8 +306,13 @@
      or they punch out of the card and get clipped by its overflow:hidden */
   #invitation-page .selbtn{font-size:12px;letter-spacing:.1em;padding:8px 13px;white-space:normal;max-width:100%;align-items:flex-start;text-align:left;line-height:1.3;gap:7px;}
   #invitation-page .selbtn .bx{width:16px;height:16px;border-radius:4px;font-size:11px;margin-top:1px;}
-  #invitation-page .tixopts{justify-content:flex-start;}
-  #invitation-page .tixopt{font-size:12px;padding:8px 11px;}
+  /* the six ticket quantities read as 3 + 3 rather than an uneven wrap.
+     width:100% because .pricewrap is align-items:flex-start, so the grid would
+     otherwise size to its content and stop short of the card edge on wider
+     phones; min-width:0 lets a label wrap on narrow ones instead of forcing
+     its track past its 1fr share. */
+  #invitation-page .tixopts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:100%;}
+  #invitation-page .tixopt{font-size:12px;padding:8px 6px;white-space:normal;text-align:center;line-height:1.25;min-width:0;}
 
   /* order form */
   #invitation-page .ordersign{padding:28px 16px 8px;}
@@ -334,7 +339,7 @@
   #invitation-page .title .l2{font-size:21px;}
   #invitation-page .pkg .mast .doc{font-size:25px;}
   #invitation-page .pkg-title{font-size:25px;}
-  #invitation-page .tixopt{font-size:11px;padding:7px 9px;}
+  #invitation-page .tixopt{font-size:11px;padding:7px 4px;}
 }
 
 /* very narrow devices only — the two-column goal grid is the intended

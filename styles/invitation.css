@@ -167,9 +167,27 @@
 #invitation-page .ofld label{display:block;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#6f6456;font-weight:600;margin-bottom:4px;}
 #invitation-page .ofld input{width:100%;border:none;border-bottom:1.6px solid #b08a3e;background:transparent;font-family:'Cormorant Garamond',serif;font-size:18px;padding:6px 2px;outline:none;color:#2b2b2b;}
 #invitation-page .ofld.sig input{font-family:'Dancing Script',cursive;font-size:30px;color:#1a2740;}
+#invitation-page .ofld .req{color:#b8111f;font-weight:700;}
+#invitation-page .ofld.bad input{border-bottom-color:#b8111f;}
+#invitation-page .ferr{color:#b8111f;font-size:13px;font-style:italic;margin-top:4px;}
 #invitation-page .paywrap{text-align:center;margin:26px 0 6px;}
 #invitation-page .paybtn{display:inline-block;background:#b8111f;color:#fff;font-family:'Cormorant Garamond',serif;font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-size:18px;padding:16px 40px;border-radius:34px;text-decoration:none;box-shadow:0 8px 22px rgba(184,17,31,.35);}
 #invitation-page .paynote{font-style:italic;color:#6f6456;font-size:14px;margin-top:10px;}
+
+/* Embedded Square card form. `.paybtn` is a <button> here rather than the
+   hosted-checkout <a>, so it needs its own reset. */
+#invitation-page button.paybtn{border:none;cursor:pointer;font-family:'Cormorant Garamond',serif;}
+#invitation-page button.paybtn:disabled{background:#8d8578;box-shadow:none;cursor:not-allowed;}
+#invitation-page .paycard{max-width:520px;margin:0 auto;text-align:left;}
+#invitation-page .paycard-label{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#6f6456;font-weight:600;margin-bottom:8px;}
+#invitation-page .sqcard{min-height:90px;margin-bottom:16px;}
+#invitation-page .paycard .paybtn{display:block;width:100%;text-align:center;}
+#invitation-page .paycard .paynote{text-align:center;}
+#invitation-page .payerr{background:#fdeaec;border-left:3px solid #b8111f;color:#8f0d18;font-size:15px;padding:10px 14px;border-radius:4px;margin-bottom:14px;}
+#invitation-page .payok{max-width:520px;margin:0 auto;background:#0c1730;color:#f7efe2;border-radius:8px;padding:26px 30px;text-align:center;}
+#invitation-page .payok .h{font-family:'Playfair Display',serif;font-weight:700;font-size:22px;color:#e9cf93;}
+#invitation-page .payok .s{font-size:15px;margin-top:8px;color:#cfc4b2;}
+#invitation-page .payok a{color:#e9cf93;font-size:14px;display:inline-block;margin-top:12px;}
 #invitation-page .tixopts{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;}
 #invitation-page .tixopt{border:2px solid #b08a3e;background:#fff;color:#b8111f;font-family:'Cormorant Garamond',serif;font-weight:700;font-size:14px;letter-spacing:.06em;padding:7px 13px;border-radius:24px;cursor:pointer;transition:all .15s;white-space:nowrap;}
 #invitation-page .tixopt:hover{box-shadow:0 4px 12px rgba(176,138,62,.3);}

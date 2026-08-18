@@ -6,6 +6,9 @@ import {
   patronTiers,
   PAYMENT_LINK,
 } from '../lib/content-invitation';
+import { computeTotal } from '../lib/pricing';
+import { BUYER_FIELDS, validateBuyer } from '../lib/buyer';
+import SquareCheckout, { squareConfigured } from '../components/SquareCheckout';
 
 const fmt = (n) => '$' + n.toLocaleString('en-US');
 
@@ -45,20 +48,35 @@ export default function Invitation() {
     );
   }, []);
 
-  const total = useMemo(
-    () =>
-      activations.reduce((sum, a) => {
-        if (a.kind === 'pledge') {
-          return (
-            sum +
-            (selection.sdg_p || 0) * a.amount +
-            (selection.sdg_g || 0) * a.guardianAmount
-          );
-        }
-        return sum + (selection[a.id] || 0) * a.amount;
-      }, 0),
-    [selection]
-  );
+  // Buyer details travel with the payment, so they are React state rather
+  // than uncontrolled inputs read out of the DOM.
+  const [buyer, setBuyer] = useState({
+    company: '',
+    signatory: '',
+    email: '',
+    phone: '',
+    signature: '',
+  });
+  const [formErrors, setFormErrors] = useState({});
+
+  const setField = (k) => (e) => {
+    setBuyer((b) => ({ ...b, [k]: e.target.value }));
+    // Clear a field's complaint as soon as the guest starts fixing it.
+    setFormErrors((errs) => (errs[k] ? { ...errs, [k]: undefined } : errs));
+  };
+
+  // Handed to the checkout, which refuses to tokenize a card until this passes.
+  const checkForm = () => validateBuyer(buyer);
+
+  const showFormErrors = (errs) => {
+    setFormErrors(errs);
+    const first = BUYER_FIELDS.find((f) => errs[f.key]);
+    if (first) document.getElementById(`o-${first.key}`)?.focus();
+  };
+
+  // Same function the API route uses to price the order, so the figure shown
+  // here and the figure charged cannot drift apart.
+  const total = useMemo(() => computeTotal(selection), [selection]);
 
   const toggle = (id) =>
     setSelection((s) => ({ ...s, [id]: s[id] ? 0 : 1 }));
@@ -426,26 +444,27 @@ export default function Invitation() {
                 <div className="v">{fmt(total)}</div>
               </div>
               <div className="ofields">
-                <div className="ofld">
-                  <label htmlFor="o-company">Company / Brand</label>
-                  <input id="o-company" placeholder="Your company" />
-                </div>
-                <div className="ofld">
-                  <label htmlFor="o-signatory">Authorized Signatory</label>
-                  <input id="o-signatory" placeholder="Full name" />
-                </div>
-                <div className="ofld">
-                  <label htmlFor="o-email">Email</label>
-                  <input id="o-email" type="email" placeholder="name@company.com" />
-                </div>
-                <div className="ofld">
-                  <label htmlFor="o-phone">Phone</label>
-                  <input id="o-phone" type="tel" placeholder="+1 ..." />
-                </div>
-                <div className="ofld sig">
-                  <label htmlFor="o-signature">Signature</label>
-                  <input id="o-signature" placeholder="Type your name to sign" />
-                </div>
+                {BUYER_FIELDS.map((f) => (
+                  <div
+                    className={`ofld${f.className ? ' ' + f.className : ''}${
+                      formErrors[f.key] ? ' bad' : ''
+                    }`}
+                    key={f.key}
+                  >
+                    <label htmlFor={`o-${f.key}`}>
+                      {f.label} <span className="req">*</span>
+                    </label>
+                    <input
+                      id={`o-${f.key}`}
+                      type={f.type || 'text'}
+                      placeholder={f.placeholder}
+                      value={buyer[f.key]}
+                      onChange={setField(f.key)}
+                      aria-invalid={formErrors[f.key] ? 'true' : undefined}
+                    />
+                    {formErrors[f.key] && <div className="ferr">{formErrors[f.key]}</div>}
+                  </div>
+                ))}
                 <div className="ofld">
                   <label htmlFor="o-date">Date</label>
                   <input
@@ -457,18 +476,32 @@ export default function Invitation() {
                 </div>
               </div>
               <div className="paywrap">
-                <a
-                  className="paybtn"
-                  href={PAYMENT_LINK}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Proceed to Secure Payment &rarr;
-                </a>
-                <div className="paynote">
-                  Opens your secure Square checkout &mdash; enter the Total Commitment
-                  shown above.
-                </div>
+                {squareConfigured ? (
+                  <SquareCheckout
+                    total={total}
+                    selection={selection}
+                    buyer={buyer}
+                    validate={checkForm}
+                    onInvalid={showFormErrors}
+                  />
+                ) : (
+                  // No Square keys in the environment — fall back to the hosted
+                  // payment link so the page still takes money.
+                  <>
+                    <a
+                      className="paybtn"
+                      href={PAYMENT_LINK}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Proceed to Secure Payment &rarr;
+                    </a>
+                    <div className="paynote">
+                      Opens your secure Square checkout &mdash; enter the Total
+                      Commitment shown above.
+                    </div>
+                  </>
+                )}
               </div>
             </div>
 

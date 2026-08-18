@@ -1,0 +1,7 @@
+/* Minimal reset. Everything else lives in invitation.css, scoped under
+   #invitation-page — this file only clears the UA defaults that would
+   otherwise show around the page (body margin) and sets the paper colour
+   behind it so there is no white band on overscroll. */
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:#d8d2c8;-webkit-text-size-adjust:100%;}

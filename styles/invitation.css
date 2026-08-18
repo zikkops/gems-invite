@@ -1,0 +1,329 @@
+/* Scoped styles for the Earth Soirée invitation — prefixed with #invitation-page. */
+#invitation-page{
+  --red:#b8111f;
+  --red-deep:#8c0d18;
+  --ink:#2b2b2b;
+  --muted:#6f6456;
+  --gold:#b08a3e;
+  --paper:#ffffff;
+  --paper-2:#faf6f0;
+  --line:#e6d9c6;
+
+  background:#d8d2c8;
+  min-height:100vh;
+  font-family:'Cormorant Garamond',serif;
+  line-height:1.6;
+  display:flex;justify-content:center;
+  padding:40px 16px;
+}
+#invitation-page *{margin:0;padding:0;box-sizing:border-box;}
+
+/* masthead */
+#invitation-page .mast{padding:120px 60px 46px;text-align:center;border-bottom:2px solid var(--red);background:#fff;}
+#invitation-page .mast .conv{font-size:12px;letter-spacing:.34em;text-transform:uppercase;color:var(--gold);font-weight:600;padding-left:.34em;margin-bottom:20px;}
+#invitation-page .lock{margin-bottom:6px;}
+#invitation-page .lock img{width:220px;max-width:44%;height:auto;display:block;margin:0 auto 2px;}
+#invitation-page .lock .wd{font-family:'Helvetica Neue',Arial,sans-serif;font-weight:800;font-size:25px;letter-spacing:.16em;color:#20242b;line-height:1;}
+#invitation-page .lock .bh{font-family:'Helvetica Neue',Arial,sans-serif;font-weight:600;font-size:12px;letter-spacing:.34em;color:var(--gold);margin-top:7px;}
+#invitation-page .ident{display:inline-block;margin-top:40px;text-align:center;}
+#invitation-page .ident .ename{display:block;text-align:center;font-family:'Playfair Display',serif;font-weight:800;font-size:60px;color:var(--red);line-height:1;}
+#invitation-page .ident .etag{display:block;text-align:center;font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:600;font-size:28px;color:var(--ink);margin-top:8px;letter-spacing:.01em;}
+#invitation-page .patron{margin-top:30px;}
+#invitation-page .patron .pk{font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--gold);font-weight:600;padding-left:.34em;}
+#invitation-page .patron .pn{font-family:'Playfair Display',serif;font-weight:700;font-size:23px;color:var(--ink);margin-top:7px;}
+#invitation-page .patron .pt{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;color:var(--muted);margin-top:3px;}
+
+/* hero */
+#invitation-page .hero{position:relative;overflow:hidden;}
+#invitation-page .hero img{width:100%;height:auto;display:block;}
+#invitation-page .hero .veil{display:none;}
+#invitation-page .hero .banner{position:absolute;top:22px;left:50%;transform:translateX(-50%);background:var(--red);color:#fff;font-size:12px;letter-spacing:.36em;text-transform:uppercase;font-weight:600;padding:9px 22px;padding-left:calc(.36em + 22px);white-space:nowrap;}
+#invitation-page .hero .cap{position:absolute;left:0;right:0;bottom:24px;text-align:center;color:#fff;font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;font-size:24px;letter-spacing:.05em;padding:0 24px;text-shadow:0 1px 2px rgba(0,0,0,.95),0 1px 3px rgba(0,0,0,.8);}
+
+/* title */
+#invitation-page .titlewrap{text-align:center;padding:48px 60px 0;}
+#invitation-page .title{font-family:'Playfair Display',serif;line-height:.9;}
+#invitation-page .title .l1{display:block;font-weight:900;font-style:italic;font-size:104px;color:var(--red);}
+#invitation-page .title .l2{display:block;font-weight:800;font-size:46px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);margin-top:2px;}
+#invitation-page .place{margin-top:20px;font-size:20px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);font-weight:600;padding-left:.32em;}
+
+#invitation-page .tagline{margin:34px auto 0;max-width:600px;font-family:'Playfair Display',serif;font-style:normal;font-weight:700;font-size:33px;line-height:1.2;letter-spacing:.005em;color:var(--ink);}
+#invitation-page .tagline b{color:var(--red);font-style:normal;}
+
+#invitation-page .lead{margin:22px auto 0;max-width:600px;font-size:21px;line-height:1.5;color:var(--muted);}
+#invitation-page .lead b{color:var(--red);font-weight:600;}
+
+/* SDG strip */
+#invitation-page .sdgblock{margin:38px 40px 0;background:var(--paper-2);border:1px solid var(--line);text-align:center;padding:22px 30px 22px;}
+#invitation-page .sdgblock .ey{font-size:12px;letter-spacing:.38em;text-transform:uppercase;color:var(--gold);font-weight:600;padding-left:.38em;}
+#invitation-page .sdgblock .hd{font-family:'Playfair Display',serif;font-weight:700;font-size:22px;color:var(--ink);margin-top:5px;line-height:1.18;}
+#invitation-page .sdgblock .hd b{color:var(--red);}
+#invitation-page .sdggrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px 18px;margin:16px auto 0;max-width:660px;text-align:left;}
+#invitation-page .goal{display:flex;align-items:center;gap:8px;}
+#invitation-page .goal .num{width:16px;height:16px;border-radius:50%;flex:none;color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;font-size:8px;}
+#invitation-page .goal .nm{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:14px;color:var(--ink);letter-spacing:.01em;line-height:1.1;}
+
+/* program */
+#invitation-page .program{margin:44px 40px 0;background:linear-gradient(180deg,#fffdf9,#fbf5ec);border:1px solid var(--line);border-top:3px solid var(--red);padding:42px 54px 46px;}
+#invitation-page .phead{display:flex;align-items:center;justify-content:center;gap:16px;font-size:12px;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);font-weight:600;padding-left:.4em;margin-bottom:30px;}
+#invitation-page .phead::before,#invitation-page .phead::after{content:"";height:1px;width:60px;background:linear-gradient(90deg,transparent,var(--gold));}
+#invitation-page .phead::after{transform:scaleX(-1);}
+
+#invitation-page .item{display:grid;grid-template-columns:60px 1fr;align-items:baseline;gap:22px;padding:24px 0;}
+#invitation-page .item + .item{border-top:1px solid var(--line);}
+#invitation-page .item .rn{font-family:'Playfair Display',serif;font-style:italic;font-weight:700;font-size:40px;color:var(--red);line-height:1;text-align:center;}
+#invitation-page .item h3{font-family:'Playfair Display',serif;font-weight:700;font-size:26px;letter-spacing:.01em;text-transform:uppercase;color:var(--ink);}
+#invitation-page .item h3 span{color:var(--red);}
+#invitation-page .item h3 .by{display:block;color:var(--ink);text-transform:none;font-style:italic;font-weight:600;font-size:17px;font-family:'Cormorant Garamond',serif;letter-spacing:.03em;margin-top:9px;}
+#invitation-page .item h3 .tif{font-family:'Libre Baskerville',Baskerville,'Times New Roman',serif;font-style:normal;font-weight:700;color:#0ABAB5;font-size:16.5px;letter-spacing:.1em;}
+#invitation-page .item h3 .ico{width:26px;height:26px;flex:none;fill:var(--red);}
+#invitation-page .item p{font-size:20px;line-height:1.45;color:var(--muted);margin-top:8px;}
+#invitation-page .item p em{color:var(--ink);font-style:italic;}
+
+/* details card */
+#invitation-page .details{margin:40px 40px 0;background:var(--paper-2);border:1px solid var(--line);border-top:3px solid var(--red);text-align:center;padding:40px 40px 36px;}
+#invitation-page .when{font-family:'Playfair Display',serif;font-weight:800;font-size:40px;color:var(--red);letter-spacing:.02em;line-height:1;}
+#invitation-page .when .dot{color:var(--gold);}
+#invitation-page .hour{font-style:italic;font-size:24px;color:var(--ink);margin-top:12px;}
+#invitation-page .addr{margin-top:16px;font-size:18px;letter-spacing:.28em;text-transform:uppercase;color:var(--ink);padding-left:.28em;}
+#invitation-page .dress{margin-top:12px;font-size:13px;letter-spacing:.34em;text-transform:uppercase;color:var(--red);font-weight:600;padding-left:.34em;}
+
+/* footer */
+#invitation-page .foot{text-align:center;padding:34px 60px 42px;}
+#invitation-page .motto{font-family:'Playfair Display',serif;font-style:italic;font-weight:600;font-size:24px;color:var(--red);}
+#invitation-page .rsvp{margin-top:20px;font-size:15px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink);padding-left:.22em;}
+#invitation-page .rsvp b{color:var(--red);}
+#invitation-page .fine{margin-top:14px;font-style:italic;font-size:15px;color:#9a8f80;}
+
+/* sponsorship packages */
+#invitation-page .pkg{width:100%;background:transparent;overflow:visible;}
+#invitation-page .pkg .mast{padding:70px 60px 38px;text-align:center;border-bottom:2px solid var(--red);}
+#invitation-page .pkg .mast .conv{font-size:12px;letter-spacing:.34em;text-transform:uppercase;color:var(--gold);font-weight:600;padding-left:.34em;margin-bottom:16px;}
+#invitation-page .pkg .lock img{width:180px;max-width:40%;height:auto;display:block;margin:0 auto 2px;}
+#invitation-page .pkg .lock .wd{font-family:'Helvetica Neue',Arial,sans-serif;font-weight:800;font-size:20px;letter-spacing:.16em;color:#20242b;}
+#invitation-page .pkg .lock .bh{font-family:'Helvetica Neue',Arial,sans-serif;font-weight:600;font-size:11px;letter-spacing:.34em;color:var(--gold);margin-top:6px;}
+#invitation-page .pkg .mast .doc{font-family:'Playfair Display',serif;font-weight:800;font-size:42px;color:var(--red);margin-top:26px;line-height:1;}
+#invitation-page .pkg .mast .sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:600;font-size:23px;color:var(--ink);margin-top:8px;}
+#invitation-page .pkg .intro{padding:36px 60px 4px;text-align:center;}
+#invitation-page .pkg .intro .h{font-family:'Playfair Display',serif;font-weight:800;font-size:26px;color:var(--ink);}
+#invitation-page .pkg .intro .h b{color:var(--red);}
+#invitation-page .pkg .intro p{max-width:600px;margin:12px auto 0;font-size:20px;line-height:1.5;color:var(--muted);}
+#invitation-page .pkg .cards{padding:30px 44px 8px;display:flex;flex-direction:column;gap:26px;}
+#invitation-page .pkg .card{border:1px solid var(--line);overflow:hidden;background:#fff;box-shadow:0 8px 22px rgba(0,0,0,.06);}
+#invitation-page .pkg .viz{position:relative;line-height:0;border-bottom:3px solid var(--red);}
+#invitation-page .pkg .viz .photo{width:100%;height:auto;display:block;}
+#invitation-page .pkg .tsviz{position:relative;}
+#invitation-page .pkg .tsviz::after{content:none;}
+#invitation-page .pkg .tsviz .tsblock{position:absolute;top:7%;left:50%;transform:translateX(-50%);text-align:center;z-index:3;width:max-content;max-width:86%;background:linear-gradient(180deg,rgba(9,13,28,.68),rgba(9,13,28,.52));border:1px solid rgba(217,178,90,.75);outline:1px solid rgba(217,178,90,.34);outline-offset:4px;padding:clamp(10px,1.9vw,16px) clamp(14px,6vw,50px) clamp(12px,2.4vw,20px);border-radius:3px;box-shadow:0 12px 36px rgba(0,0,0,.5);text-shadow:0 1px 4px rgba(0,0,0,.85);}
+#invitation-page .pkg .tsviz .tk,
+#invitation-page .pkg .tsviz .tscript,
+#invitation-page .pkg .tsviz .tmain,
+#invitation-page .pkg .tsviz .tsub{white-space:nowrap;}
+#invitation-page .pkg .tsviz .tk{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:clamp(9px,1.7vw,14px);letter-spacing:.42em;text-transform:uppercase;color:#e6c877;padding-left:.42em;}
+#invitation-page .pkg .tsviz .tscript{font-family:'Cormorant Garamond',serif;font-style:normal;font-weight:600;font-size:clamp(15px,4vw,33px);letter-spacing:.12em;color:#fbf3e0;margin-top:16px;line-height:1;}
+#invitation-page .pkg .tsviz .tmain{font-family:'Playfair Display',serif;font-weight:800;font-size:clamp(26px,7.8vw,64px);letter-spacing:.02em;color:#eccb80;line-height:.96;margin-top:2px;}
+#invitation-page .pkg .tsviz .tsub{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:clamp(9px,2.07vw,17px);letter-spacing:.34em;text-transform:uppercase;color:#f3e6c8;margin-top:10px;padding-left:.34em;}
+#invitation-page .pkg .viz .rn{position:absolute;top:12px;left:14px;font-family:'Playfair Display',serif;font-style:italic;font-weight:700;font-size:22px;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.8);}
+#invitation-page .pkg .body{padding:20px 26px 24px;}
+#invitation-page .pkg .crow{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;}
+#invitation-page .pkg .cname{font-family:'Playfair Display',serif;font-weight:800;font-size:26px;color:var(--ink);}
+#invitation-page .pkg .cprice{font-family:'Playfair Display',serif;font-weight:800;font-size:24px;color:var(--red);white-space:nowrap;}
+#invitation-page .pkg .avail{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;color:var(--gold);margin-top:2px;letter-spacing:.02em;}
+#invitation-page .pkg .cdesc{font-size:19px;line-height:1.45;color:var(--muted);margin-top:10px;}
+#invitation-page .pkg .cdesc b{color:var(--ink);font-weight:600;}
+#invitation-page .pdisc{font-size:11.5px;font-style:italic;color:#a89b88;margin-top:10px;padding-top:8px;border-top:1px dashed #e6d9c6;}
+#invitation-page .pkg .foot{text-align:center;padding:20px 60px 40px;}
+#invitation-page .pkg .foot .m{font-family:'Playfair Display',serif;font-style:italic;font-weight:600;font-size:22px;color:var(--red);}
+#invitation-page .pkg .foot .c{margin-top:12px;font-size:15px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink);}
+#invitation-page .pkg .foot .c b{color:var(--red);}
+#invitation-page .pkg .foot .f{margin-top:8px;font-style:italic;font-size:14px;color:#9a8f80;}
+#invitation-page .pkg .foot .disc{margin:16px auto 0;max-width:560px;font-size:12px;line-height:1.4;color:#b3a998;border-top:1px solid var(--line);padding-top:14px;}
+
+#invitation-page .combined{width:820px;max-width:100%;background:#fff;box-shadow:0 30px 90px rgba(0,0,0,.28);overflow:hidden;margin:0 auto;}
+#invitation-page .pkg-head{text-align:center;padding:52px 60px 6px;border-top:3px solid var(--red);}
+#invitation-page .pkg-eye{font-size:12px;letter-spacing:.42em;text-transform:uppercase;color:#b08a3e;font-weight:600;padding-left:.42em;}
+#invitation-page .pkg-title{font-family:'Playfair Display',serif;font-weight:800;font-size:42px;color:#b8111f;margin-top:8px;line-height:1;}
+#invitation-page .pkg-orn{display:flex;align-items:center;justify-content:center;gap:14px;margin:16px auto 0;color:#b8111f;}
+#invitation-page .pkg-orn span{font-size:11px;letter-spacing:.3em;}
+#invitation-page .pkg-orn::before,#invitation-page .pkg-orn::after{content:"";height:1px;width:80px;background:linear-gradient(90deg,transparent,#b08a3e);}
+#invitation-page .pkg-orn::after{transform:scaleX(-1);}
+
+/* selection + order form */
+#invitation-page .pkg .card{position:relative;transition:outline .12s;}
+#invitation-page .pkg .card.chosen{outline:3px solid #b08a3e;outline-offset:-3px;}
+#invitation-page .pricewrap{display:flex;flex-direction:column;align-items:flex-end;gap:8px;margin-bottom:14px;}
+#invitation-page .selbtn{display:inline-flex;align-items:center;gap:9px;border:2px solid #b08a3e;background:#fff;color:#b8111f;font-family:'Cormorant Garamond',serif;font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:15px;padding:9px 22px;border-radius:30px;cursor:pointer;transition:all .15s;box-shadow:0 3px 10px rgba(176,138,62,.18);white-space:nowrap;}
+#invitation-page .selbtn:hover{box-shadow:0 6px 16px rgba(176,138,62,.30);}
+#invitation-page .selbtn .bx{width:20px;height:20px;border:2px solid #b08a3e;border-radius:5px;display:inline-flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px;line-height:1;background:#fff;}
+#invitation-page .selbtn.on{background:#0c1730;border-color:#e0b352;color:#e6c877;}
+#invitation-page .selbtn.on .bx{background:#2e7d46;border-color:#2e7d46;}
+#invitation-page .ordersign{padding:40px 54px 8px;border-top:3px solid #b8111f;}
+#invitation-page .ordersign h2{font-family:'Playfair Display',serif;font-weight:800;font-size:30px;color:#b8111f;text-align:center;}
+#invitation-page .ordtot{margin:20px auto;max-width:640px;background:#0c1730;color:#f7efe2;border-radius:8px;display:flex;justify-content:space-between;align-items:center;padding:18px 26px;}
+#invitation-page .ordtot .l{font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:#e9cf93;}
+#invitation-page .ordtot .v{font-family:'Playfair Display',serif;font-weight:800;font-size:34px;color:#fff;}
+#invitation-page .ordtot .tier{font-style:italic;color:#e9cf93;font-size:15px;}
+#invitation-page .ofields{display:grid;grid-template-columns:1fr 1fr;gap:14px 26px;max-width:720px;margin:0 auto;}
+#invitation-page .ofld label{display:block;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#6f6456;font-weight:600;margin-bottom:4px;}
+#invitation-page .ofld input{width:100%;border:none;border-bottom:1.6px solid #b08a3e;background:transparent;font-family:'Cormorant Garamond',serif;font-size:18px;padding:6px 2px;outline:none;color:#2b2b2b;}
+#invitation-page .ofld.sig input{font-family:'Dancing Script',cursive;font-size:30px;color:#1a2740;}
+#invitation-page .paywrap{text-align:center;margin:26px 0 6px;}
+#invitation-page .paybtn{display:inline-block;background:#b8111f;color:#fff;font-family:'Cormorant Garamond',serif;font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-size:18px;padding:16px 40px;border-radius:34px;text-decoration:none;box-shadow:0 8px 22px rgba(184,17,31,.35);}
+#invitation-page .paynote{font-style:italic;color:#6f6456;font-size:14px;margin-top:10px;}
+#invitation-page .tixopts{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;}
+#invitation-page .tixopt{border:2px solid #b08a3e;background:#fff;color:#b8111f;font-family:'Cormorant Garamond',serif;font-weight:700;font-size:14px;letter-spacing:.06em;padding:7px 13px;border-radius:24px;cursor:pointer;transition:all .15s;white-space:nowrap;}
+#invitation-page .tixopt:hover{box-shadow:0 4px 12px rgba(176,138,62,.3);}
+#invitation-page .tixopt.on{background:#0c1730;border-color:#e0b352;color:#e6c877;}
+
+/* ---------------------------------------------------------------------
+   Responsive.
+
+   These blocks must stay at the END of this file. The .pkg-scoped rules
+   above are more specific than the plain ones (#invitation-page .pkg
+   .mast beats #invitation-page .mast), so a media query placed earlier
+   loses on the cascade regardless of the viewport — which is why the
+   sponsorship masthead kept its 60px desktop padding on phones.
+   --------------------------------------------------------------------- */
+
+/* tablets and small laptops — the card is 820px, so it starts to crowd here */
+@media(max-width:900px){
+  #invitation-page{padding:24px 12px;}
+  #invitation-page .mast{padding:80px 40px 40px;}
+  #invitation-page .titlewrap{padding:40px 40px 0;}
+  #invitation-page .sdgblock{margin:32px 24px 0;}
+  #invitation-page .program{margin:36px 24px 0;padding:36px 34px 38px;}
+  #invitation-page .details{margin:32px 24px 0;}
+  #invitation-page .foot{padding:30px 40px 36px;}
+  #invitation-page .pkg .mast{padding:56px 40px 32px;}
+  #invitation-page .pkg .intro{padding:30px 40px 4px;}
+  #invitation-page .pkg .cards{padding:26px 24px 8px;}
+  #invitation-page .pkg .foot{padding:20px 40px 34px;}
+  #invitation-page .pkg-head{padding:44px 40px 6px;}
+  #invitation-page .ordersign{padding:34px 32px 8px;}
+}
+
+/* phones */
+@media(max-width:640px){
+  #invitation-page{padding:16px 10px;}
+
+  /* masthead + identity */
+  #invitation-page .mast{padding:56px 22px 32px;}
+  #invitation-page .mast .conv{font-size:10px;letter-spacing:.24em;padding-left:.24em;margin-bottom:16px;}
+  #invitation-page .lock img{max-width:58%;}
+  #invitation-page .lock .wd{font-size:19px;letter-spacing:.12em;}
+  #invitation-page .lock .bh{font-size:10px;letter-spacing:.24em;}
+  #invitation-page .ident{margin-top:26px;}
+  #invitation-page .ident .ename{font-size:38px;}
+  #invitation-page .ident .etag{font-size:20px;}
+  #invitation-page .patron .pn{font-size:19px;}
+  #invitation-page .patron .pt{font-size:15px;}
+
+  /* hero — banner and caption are absolutely positioned over the photo */
+  #invitation-page .hero .banner{top:12px;font-size:9px;letter-spacing:.18em;padding:6px 12px;padding-left:calc(.18em + 12px);max-width:calc(100% - 24px);}
+  #invitation-page .hero .cap{bottom:12px;font-size:15px;padding:0 14px;}
+
+  /* title */
+  #invitation-page .titlewrap{padding:32px 22px 0;}
+  #invitation-page .title .l1{font-size:52px;}
+  #invitation-page .title .l2{font-size:24px;letter-spacing:.04em;}
+  #invitation-page .place{font-size:14px;letter-spacing:.2em;padding-left:.2em;}
+  #invitation-page .tagline{font-size:23px;}
+  #invitation-page .lead{font-size:18px;}
+
+  /* SDG strip */
+  #invitation-page .sdgblock{margin:28px 10px 0;padding:20px 16px;}
+  #invitation-page .sdgblock .ey{font-size:10px;letter-spacing:.26em;padding-left:.26em;}
+  #invitation-page .sdgblock .hd{font-size:19px;}
+  #invitation-page .sdggrid{grid-template-columns:1fr 1fr;gap:8px 12px;}
+  #invitation-page .goal .nm{font-size:12.5px;}
+
+  /* program */
+  #invitation-page .program{margin:32px 10px 0;padding:30px 18px 32px;}
+  #invitation-page .phead{gap:10px;font-size:10px;letter-spacing:.28em;padding-left:.28em;margin-bottom:22px;}
+  #invitation-page .phead::before,#invitation-page .phead::after{width:28px;}
+  #invitation-page .item{grid-template-columns:38px 1fr;gap:12px;padding:20px 0;}
+  #invitation-page .item .rn{font-size:28px;}
+  #invitation-page .item h3{font-size:19px;}
+  #invitation-page .item h3 .by{font-size:15px;}
+  #invitation-page .item p{font-size:17px;}
+
+  /* details card */
+  #invitation-page .details{margin:30px 10px 0;padding:28px 18px 26px;}
+  #invitation-page .when{font-size:26px;}
+  #invitation-page .hour{font-size:19px;}
+  #invitation-page .addr{font-size:13px;letter-spacing:.14em;padding-left:.14em;}
+  #invitation-page .dress{font-size:11px;letter-spacing:.22em;padding-left:.22em;}
+
+  /* invitation footer */
+  #invitation-page .foot{padding:26px 22px 32px;}
+  #invitation-page .motto{font-size:20px;}
+  #invitation-page .rsvp{font-size:13px;letter-spacing:.14em;padding-left:.14em;}
+  #invitation-page .fine{font-size:14px;}
+
+  /* sponsorship masthead */
+  #invitation-page .pkg .mast{padding:44px 22px 28px;}
+  #invitation-page .pkg .mast .doc{font-size:29px;}
+  #invitation-page .pkg .mast .sub{font-size:18px;}
+  #invitation-page .pkg .lock img{max-width:54%;}
+  #invitation-page .pkg .intro{padding:26px 22px 4px;}
+  #invitation-page .pkg .intro .h{font-size:21px;}
+  #invitation-page .pkg .intro p{font-size:17px;}
+  #invitation-page .pkg-head{padding:34px 22px 6px;}
+  #invitation-page .pkg-eye{font-size:10px;letter-spacing:.28em;padding-left:.28em;}
+  #invitation-page .pkg-title{font-size:28px;}
+  #invitation-page .pkg-orn::before,#invitation-page .pkg-orn::after{width:40px;}
+
+  /* sponsorship cards — price/select stack under the name instead of
+     fighting it for width on one row */
+  #invitation-page .pkg .cards{padding:22px 10px 8px;gap:20px;}
+  #invitation-page .pkg .body{padding:18px 16px 20px;}
+  #invitation-page .pkg .crow{flex-direction:column;align-items:stretch;gap:10px;}
+  #invitation-page .pkg .cname{font-size:22px;}
+  #invitation-page .pkg .cprice{font-size:21px;}
+  #invitation-page .pkg .avail{font-size:15px;}
+  #invitation-page .pkg .cdesc{font-size:17px;}
+  #invitation-page .pkg .viz .rn{top:8px;left:10px;font-size:18px;}
+  #invitation-page .pricewrap{align-items:flex-start;margin-bottom:0;}
+  /* the label inherits nowrap from .selbtn; long tiers need to wrap here
+     or they punch out of the card and get clipped by its overflow:hidden */
+  #invitation-page .selbtn{font-size:12px;letter-spacing:.1em;padding:8px 13px;white-space:normal;max-width:100%;align-items:flex-start;text-align:left;line-height:1.3;gap:7px;}
+  #invitation-page .selbtn .bx{width:16px;height:16px;border-radius:4px;font-size:11px;margin-top:1px;}
+  #invitation-page .tixopts{justify-content:flex-start;}
+  #invitation-page .tixopt{font-size:12px;padding:8px 11px;}
+
+  /* order form */
+  #invitation-page .ordersign{padding:28px 16px 8px;}
+  #invitation-page .ordersign h2{font-size:23px;}
+  #invitation-page .ordtot{flex-direction:column;align-items:flex-start;gap:8px;padding:16px 18px;}
+  #invitation-page .ordtot .v{font-size:30px;}
+  #invitation-page .ofields{grid-template-columns:1fr;gap:16px;}
+  #invitation-page .ofld input{font-size:16px;}  /* >=16px stops iOS zooming in on focus */
+  #invitation-page .ofld.sig input{font-size:26px;}
+  #invitation-page .paybtn{font-size:16px;padding:15px 26px;}
+  #invitation-page .paynote{font-size:13px;}
+
+  /* sponsorship footer */
+  #invitation-page .pkg .foot{padding:18px 22px 30px;}
+  #invitation-page .pkg .foot .m{font-size:19px;}
+  #invitation-page .pkg .foot .c{font-size:13px;letter-spacing:.12em;}
+  #invitation-page .pkg .foot .disc{font-size:11px;}
+}
+
+/* small phones (iPhone SE and similar) */
+@media(max-width:400px){
+  #invitation-page .ident .ename{font-size:32px;}
+  #invitation-page .title .l1{font-size:42px;}
+  #invitation-page .title .l2{font-size:21px;}
+  #invitation-page .pkg .mast .doc{font-size:25px;}
+  #invitation-page .pkg-title{font-size:25px;}
+  #invitation-page .tixopt{font-size:11px;padding:7px 9px;}
+}
+
+/* very narrow devices only — the two-column goal grid is the intended
+   mobile layout, so it collapses just where it genuinely stops fitting */
+@media(max-width:340px){
+  #invitation-page .sdggrid{grid-template-columns:1fr;}
+  /* .cprice is nowrap and some prices carry a note after them */
+  #invitation-page .pkg .cprice{white-space:normal;font-size:19px;}
+  #invitation-page .selbtn{font-size:11px;padding:7px 11px;letter-spacing:.06em;}
+}

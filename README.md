@@ -68,20 +68,51 @@ All five sponsor fields must be filled in before a card is even tokenized.
 browser and the API route validate against it, so the server rejects an
 incomplete order even if the browser check is bypassed.
 
-### Order notifications — not yet wired
+## Order notification emails
 
-`lib/notify.js` composes the "new commitment" email and is called after every
-successful payment. **It currently logs instead of sending** — there is no mail
-transport configured yet. Recipients come from `ORDER_NOTIFICATION_EMAILS`
-(comma-separated).
+After every successful payment, `lib/notify.js` emails the full order — line
+items, total, all five sponsor fields, the Square payment id and receipt link —
+to every address in `ORDER_NOTIFICATION_EMAILS` (comma-separated). The
+sponsor's own address is set as `Reply-To`, so replying reaches them directly.
 
-After the Hostinger deploy, fill in the `SMTP_*` variables and replace the log
-in `deliver()` with a real send. Nothing else needs to change. The function is
-deliberately unable to throw: the card has already been charged by the time it
-runs, so a mail failure must never surface as a failed payment.
+Delivery is SMTP via nodemailer. The four variables it needs:
 
-Separately, Square emails its own receipt to the address on the order, because
-the route passes it as `buyer_email_address`.
+| Variable | Value |
+| --- | --- |
+| `SMTP_HOST` | `smtp.hostinger.com` |
+| `SMTP_PORT` | `465` (implicit TLS) or `587` (STARTTLS) |
+| `SMTP_USER` | the full mailbox address, e.g. `info@gemsworlddialogue.com` |
+| `SMTP_PASS` | that **mailbox's** password — not the hPanel login |
+
+Create the mailbox first in hPanel under **Emails → gemsworlddialogue.com**,
+then read its settings from **Connect apps & devices**. Hostinger rejects a
+`From` that is not the authenticated mailbox, so `SMTP_USER` must be a real
+mailbox on the domain; the `From` header defaults to it.
+
+With any of them missing the message is logged rather than sent, so an order is
+still recoverable from the server log.
+
+### Verifying delivery
+
+Set `NOTIFY_TEST_SECRET` to a long random string and call:
+
+```
+curl "https://invitation.gemsworlddialogue.com/api/test-notification?secret=YOUR_SECRET"
+```
+
+It sends a clearly-labelled sample order to the real recipients without taking
+a card. The endpoint returns 404 while `NOTIFY_TEST_SECRET` is unset, so it is
+off unless deliberately switched on.
+
+### Failure behaviour
+
+`sendOrderNotification` cannot throw. The card has already been charged by the
+time it runs, so a mail failure must never surface to the sponsor as a failed
+payment — instead it logs `ORDER NOTIFICATION FAILED` followed by the full
+order, which is the record to work from if an email goes missing.
+
+Separately, Square emails its own receipt to the sponsor, because the route
+passes their address as `buyer_email_address`.
 
 ### Setting them on Vercel
 
@@ -107,8 +138,9 @@ the `NEXT_PUBLIC_` ones are baked in at build time.
   form and reports the result.
 - `lib/buyer.js` — the order form's field list and its validation, shared by
   the page and the API route.
-- `lib/notify.js` — composes the order email. Logging only until a transport is
-  configured.
+- `lib/notify.js` — composes and sends the order email over SMTP.
+- `pages/api/test-notification.js` — secret-gated sample send, for checking the
+  mailbox works.
 - `styles/invitation.css` — every rule scoped under `#invitation-page`. The
   responsive blocks must stay at the end of the file; the `.pkg` rules above
   them are more specific, so a media query placed earlier loses the cascade.

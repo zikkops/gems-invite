@@ -6,9 +6,8 @@ import {
   patronTiers,
   PAYMENT_LINK,
 } from '../lib/content-invitation';
-import { computeTotal } from '../lib/pricing';
+import { computeTotal, pledgeKeys } from '../lib/pricing';
 import { BUYER_FIELDS, validateBuyer } from '../lib/buyer';
-import SquareCheckout, { squareConfigured } from '../components/SquareCheckout';
 
 const fmt = (n) => '$' + n.toLocaleString('en-US');
 
@@ -74,6 +73,30 @@ export default function Invitation() {
     if (first) document.getElementById(`o-${first.key}`)?.focus();
   };
 
+  const [orderSent, setOrderSent] = useState(false);
+
+  // The payment itself happens on Square's own page, where the sponsor types
+  // the total shown above. Nothing comes back to us from there, so the order
+  // is sent on the way out — otherwise we would never learn who committed to
+  // what. The link is left to open as normal; only an incomplete form stops it.
+  const handleProceed = (e) => {
+    const { valid, errors } = validateBuyer(buyer);
+    if (!valid) {
+      e.preventDefault();
+      showFormErrors(errors);
+      return;
+    }
+
+    fetch('/api/submit-order', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ selection, buyer, signDate }),
+      keepalive: true, // survives the tab losing focus to Square
+    })
+      .then(() => setOrderSent(true))
+      .catch(() => {});
+  };
+
   // Same function the API route uses to price the order, so the figure shown
   // here and the figure charged cannot drift apart.
   const total = useMemo(() => computeTotal(selection), [selection]);
@@ -84,18 +107,22 @@ export default function Invitation() {
   const setTickets = (id, qty) =>
     setSelection((s) => ({ ...s, [id]: s[id] === qty ? 0 : qty }));
 
-  // Presenting Patron and Guardian of the Goals cannot both be held.
-  const togglePledge = (key) =>
+  // Within one pledge card the two spots are mutually exclusive; the other
+  // pledge card is untouched.
+  const togglePledge = (a, key) => {
+    const { p, g } = pledgeKeys(a);
     setSelection((s) => ({
       ...s,
-      sdg_p: key === 'sdg_p' ? (s.sdg_p ? 0 : 1) : 0,
-      sdg_g: key === 'sdg_g' ? (s.sdg_g ? 0 : 1) : 0,
+      [p]: key === p ? (s[p] ? 0 : 1) : 0,
+      [g]: key === g ? (s[g] ? 0 : 1) : 0,
     }));
+  };
 
-  const isChosen = (a) =>
-    a.kind === 'pledge'
-      ? Boolean(selection.sdg_p || selection.sdg_g)
-      : Boolean(selection[a.id]);
+  const isChosen = (a) => {
+    if (a.kind !== 'pledge') return Boolean(selection[a.id]);
+    const { p, g } = pledgeKeys(a);
+    return Boolean(selection[p] || selection[g]);
+  };
 
   return (
     <>
@@ -354,44 +381,38 @@ export default function Invitation() {
                           </div>
                         )}
 
-                        {a.kind === 'pledge' && (
-                          <>
+                        {a.kind === 'pledge' &&
+                          [
+                            {
+                              key: pledgeKeys(a).p,
+                              label: a.presentingLabel,
+                              amount: a.amount,
+                            },
+                            {
+                              key: pledgeKeys(a).g,
+                              label: a.guardianLabel,
+                              amount: a.guardianAmount,
+                            },
+                          ].map((spot) => (
                             <div
-                              className={`selbtn${selection.sdg_p ? ' on' : ''}`}
+                              key={spot.key}
+                              className={`selbtn${selection[spot.key] ? ' on' : ''}`}
                               role="button"
                               tabIndex={0}
-                              onClick={() => togglePledge('sdg_p')}
+                              onClick={() => togglePledge(a, spot.key)}
                               onKeyDown={(e) => {
                                 if (e.key === 'Enter' || e.key === ' ') {
                                   e.preventDefault();
-                                  togglePledge('sdg_p');
+                                  togglePledge(a, spot.key);
                                 }
                               }}
                             >
-                              <span className="bx">{selection.sdg_p ? '✓' : ''}</span>
+                              <span className="bx">{selection[spot.key] ? '✓' : ''}</span>
                               <span className="lb">
-                                Presenting Patron &middot; {fmt(a.amount)}
+                                {spot.label} &middot; {fmt(spot.amount)}
                               </span>
                             </div>
-                            <div
-                              className={`selbtn${selection.sdg_g ? ' on' : ''}`}
-                              role="button"
-                              tabIndex={0}
-                              onClick={() => togglePledge('sdg_g')}
-                              onKeyDown={(e) => {
-                                if (e.key === 'Enter' || e.key === ' ') {
-                                  e.preventDefault();
-                                  togglePledge('sdg_g');
-                                }
-                              }}
-                            >
-                              <span className="bx">{selection.sdg_g ? '✓' : ''}</span>
-                              <span className="lb">
-                                Guardian of the Goals &middot; {fmt(a.guardianAmount)}
-                              </span>
-                            </div>
-                          </>
-                        )}
+                          ))}
 
                         {a.kind === 'tickets' && (
                           <div className="tixopts">
@@ -476,31 +497,24 @@ export default function Invitation() {
                 </div>
               </div>
               <div className="paywrap">
-                {squareConfigured ? (
-                  <SquareCheckout
-                    total={total}
-                    selection={selection}
-                    buyer={buyer}
-                    validate={checkForm}
-                    onInvalid={showFormErrors}
-                  />
-                ) : (
-                  // No Square keys in the environment — fall back to the hosted
-                  // payment link so the page still takes money.
-                  <>
-                    <a
-                      className="paybtn"
-                      href={PAYMENT_LINK}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Proceed to Secure Payment &rarr;
-                    </a>
-                    <div className="paynote">
-                      Opens your secure Square checkout &mdash; enter the Total
-                      Commitment shown above.
-                    </div>
-                  </>
+                <a
+                  className="paybtn"
+                  href={PAYMENT_LINK}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={handleProceed}
+                >
+                  Proceed to Secure Payment &rarr;
+                </a>
+                <div className="paynote">
+                  Opens your secure Square checkout &mdash; enter the Total Commitment
+                  shown above.
+                </div>
+                {orderSent && (
+                  <div className="paysent">
+                    Your selection has been sent to us &mdash; complete the payment in
+                    the Square window.
+                  </div>
                 )}
               </div>
             </div>

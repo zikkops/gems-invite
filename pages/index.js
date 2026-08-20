@@ -79,14 +79,26 @@ export default function Invitation() {
   // the total shown above. Nothing comes back to us from there, so the order
   // is sent on the way out — otherwise we would never learn who committed to
   // what. The link is left to open as normal; only an incomplete form stops it.
+  const [payError, setPayError] = useState('');
+
   const handleProceed = (e) => {
+    // Nothing chosen means nothing to pay for — Square would be handed a blank
+    // amount to type into.
+    if (total <= 0) {
+      e.preventDefault();
+      setPayError('Choose at least one activation above before paying.');
+      return;
+    }
+
     const { valid, errors } = validateBuyer(buyer);
     if (!valid) {
       e.preventDefault();
       showFormErrors(errors);
+      setPayError('Please complete and sign the order form above before paying.');
       return;
     }
 
+    setPayError('');
     fetch('/api/submit-order', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -100,6 +112,10 @@ export default function Invitation() {
   // Same function the API route uses to price the order, so the figure shown
   // here and the figure charged cannot drift apart.
   const total = useMemo(() => computeTotal(selection), [selection]);
+
+  // Drives the button's appearance only. The click handler re-checks, and the
+  // API route checks again, so this is a hint rather than the gate.
+  const ready = total > 0 && validateBuyer(buyer).valid;
 
   const toggle = (id) =>
     setSelection((s) => ({ ...s, [id]: s[id] ? 0 : 1 }));
@@ -498,14 +514,16 @@ export default function Invitation() {
               </div>
               <div className="paywrap">
                 <a
-                  className="paybtn"
+                  className={`paybtn${ready ? '' : ' notready'}`}
                   href={PAYMENT_LINK}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={handleProceed}
+                  aria-disabled={ready ? undefined : 'true'}
                 >
                   Proceed to Secure Payment &rarr;
                 </a>
+                {payError && <div className="payerr">{payError}</div>}
                 <div className="paynote">
                   Opens your secure Square checkout &mdash; enter the Total Commitment
                   shown above.

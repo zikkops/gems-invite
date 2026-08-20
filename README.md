@@ -30,10 +30,40 @@ so nothing here needs a secret.
 
 ### The order form is required
 
-All five sponsor fields must be filled in before the Square tab will open.
-`lib/buyer.js` defines the form once; the page renders from it and the API
+The Square tab will not open until **an activation is selected and all five
+sponsor fields are filled in**. Clicking before then keeps the sponsor on the
+page, marks the missing fields, and says why; the button is greyed until the
+order is complete.
+
+`lib/buyer.js` defines the form once — the page renders from it and the API
 route validates against it independently, so a bypassed browser check still
-cannot submit an incomplete order.
+cannot record an incomplete order.
+
+## The shared GEMS backend
+
+Every paid-through order is written to Firestore in the **same Firebase project
+that backs `gems-website`**, so sponsorships appear in that site's admin console
+next to the website enquiries. See `gems-website/BACKEND.md` for the project
+setup; this app only needs the three server variables.
+
+- Collection **`orders`**, one document per submitted order.
+- `source: 'gems-invitation'` — the field the console uses to tell the GEMS
+  properties apart.
+- `status: 'awaiting-payment'`, never `paid`. Square reports nothing back from a
+  hosted checkout, so an admin confirms the money against the Square dashboard.
+- Fields: `company`, `signatory` (also copied to `name`), `email`, `phone`,
+  `signature`, `signedOn`, `total`, `currency`, `items[]`, the raw `selection`,
+  `meta` (ip / user agent / referer) and `createdAt`.
+
+`lib/firebase/admin.js` is a copy of the website's, with one fix: its
+`privateKey()` did `replace(/\n/g, '\n')`, which is a no-op — the version here
+does `replace(/\n/g, '\n')` so a one-line key from a hosting panel is turned
+back into a real PEM. **The website's copy still has the original and will fail
+to start on a one-line key.**
+
+The write cannot throw and never blocks the sponsor reaching Square. If it
+fails it logs `ORDER NOT SAVED TO FIRESTORE` with the reason, and the
+notification email still carries the whole order.
 ## Order notification emails
 
 When the sponsor clicks through to Square, the page posts the order to
@@ -99,8 +129,11 @@ running server only picks them up on restart.
   page and the API route, so the total shown and the total emailed agree; it
   also clamps quantities, so only what the page offers is ever priced. A
   `pledge` activation owns two mutually exclusive keys, `<id>_p` and `<id>_g`.
-- `pages/api/submit-order.js` — reprices the order, checks the form and emails
-  it as the sponsor leaves for Square.
+- `pages/api/submit-order.js` — reprices the order, checks the form, then saves
+  it to Firestore and emails it as the sponsor leaves for Square.
+- `lib/orders.js` — the `orders` document shape and the write.
+- `lib/firebase/admin.js` — Admin SDK singleton, copied from gems-website.
+  Server-only; the browser never touches Firestore.
 - `lib/buyer.js` — the order form's field list and its validation, shared by
   the page and the API route.
 - `lib/notify.js` — composes and sends the order email over SMTP.

@@ -180,6 +180,10 @@
 #invitation-page .paybtn{display:inline-block;background:#b8111f;color:#fff;font-family:'Cormorant Garamond',serif;font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-size:18px;padding:16px 40px;border-radius:34px;text-decoration:none;box-shadow:0 8px 22px rgba(184,17,31,.35);}
 #invitation-page .paynote{font-style:italic;color:#6f6456;font-size:14px;margin-top:10px;}
 #invitation-page .paysent{margin:12px auto 0;max-width:520px;background:#0c1730;color:#e9cf93;font-size:15px;padding:12px 18px;border-radius:6px;}
+#invitation-page .payerr{margin:12px auto 0;max-width:520px;background:#fdeaec;border-left:3px solid #b8111f;color:#8f0d18;font-size:15px;padding:10px 14px;border-radius:4px;}
+/* The button stays clickable while incomplete — clicking is how the sponsor
+   finds out which field is missing — but it should not look ready. */
+#invitation-page .paybtn.notready{background:#a9a294;box-shadow:none;}
 #invitation-page .tixopts{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;}
 #invitation-page .tixopt{border:2px solid #b08a3e;background:#fff;color:#b8111f;font-family:'Cormorant Garamond',serif;font-weight:700;font-size:14px;letter-spacing:.06em;padding:7px 13px;border-radius:24px;cursor:pointer;transition:all .15s;white-space:nowrap;}
 #invitation-page .tixopt:hover{box-shadow:0 4px 12px rgba(176,138,62,.3);}
